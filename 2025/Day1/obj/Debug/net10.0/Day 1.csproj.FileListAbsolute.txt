@@ -1,0 +1,15 @@
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\bin\Debug\net10.0\Day 1.exe
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\bin\Debug\net10.0\Day 1.deps.json
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\bin\Debug\net10.0\Day 1.runtimeconfig.json
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\bin\Debug\net10.0\Day 1.dll
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\bin\Debug\net10.0\Day 1.pdb
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\obj\Debug\net10.0\Day 1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\obj\Debug\net10.0\Day 1.AssemblyInfoInputs.cache
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\obj\Debug\net10.0\Day 1.AssemblyInfo.cs
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\obj\Debug\net10.0\Day 1.csproj.CoreCompileInputs.cache
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\obj\Debug\net10.0\Day 1.dll
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\obj\Debug\net10.0\refint\Day 1.dll
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\obj\Debug\net10.0\Day 1.pdb
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\obj\Debug\net10.0\Day 1.genruntimeconfig.cache
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\obj\Debug\net10.0\ref\Day 1.dll
+C:\Users\Marla\Desktop\Advent of code\1\Day 1\bin\Debug\net10.0\input.txt
