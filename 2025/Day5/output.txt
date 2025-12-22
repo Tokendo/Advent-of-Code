@@ -1,1 +1,3 @@
-output
+Good products: 737
+Total ID: 357485433193284
+Total time: 3 milliseconds.
