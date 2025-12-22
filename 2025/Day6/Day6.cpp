@@ -6,7 +6,7 @@
 
 
 
-long long calculate(long long arrInValues[100],int nbQty, char calcOperator)
+long long calculate(long long arrInValues[10],int nbQty, char calcOperator)
 {
 	long long result = arrInValues[0];
 	if (calcOperator == '*')
@@ -26,7 +26,8 @@ long long calculate(long long arrInValues[100],int nbQty, char calcOperator)
 	
 	return result;
 }
-void readFilePartOne(long long arrValues[4] [1000], char arrOperators[1000], std::string inputFileName,int* pOperatorQty, int* pNbQty)
+
+long long readFileAndCalcPartOne( std::string inputFileName)
 {
 	std::ifstream inputFile(inputFileName.c_str());
 	std::string line = "";
@@ -34,7 +35,13 @@ void readFilePartOne(long long arrValues[4] [1000], char arrOperators[1000], std
 	printf("Reading file line by line:\n");
 	auto start = std::chrono::high_resolution_clock::now();
 	int charvalue = 0, lineIndex = 0, indexChar = 0;
+	int operatorQty = 0, nbQty = 0;
 	bool firstSpaceFound = false;
+
+	static long long arrValues[4][1000] = { 0 };
+	static char arrOperators[1000] = { 0 };
+	static long long arrResults[1000] = { 0 };
+
 	while (std::getline(inputFile, line)) {
 		indexChar = -1;
 		do
@@ -45,7 +52,7 @@ void readFilePartOne(long long arrValues[4] [1000], char arrOperators[1000], std
 
 		if (charvalue > 47 && charvalue < 58)
 		{
-			*pNbQty = *pNbQty+1;
+			nbQty = nbQty+1;
 			int indexArr = 0;
 			// Process numeric line
 
@@ -73,7 +80,7 @@ void readFilePartOne(long long arrValues[4] [1000], char arrOperators[1000], std
 		else
 		{
 			int indexArr = 0;
-			// Process numeric line
+			// Process operator line
 			for (size_t i = 0; i <= line.length() - 1; i++)
 			{
 				charvalue = int(line[i]);
@@ -81,7 +88,7 @@ void readFilePartOne(long long arrValues[4] [1000], char arrOperators[1000], std
 				{
 					arrOperators[indexArr] = line[i];
 					indexArr++;
-					*pOperatorQty= *pOperatorQty+1;
+					operatorQty= operatorQty+1;
 				}
 			}
 
@@ -91,11 +98,119 @@ void readFilePartOne(long long arrValues[4] [1000], char arrOperators[1000], std
 		lineIndex++;
 	}
 	inputFile.close();
+
+	long long total = 0, result = 0;
+	for (size_t i = 0; i < operatorQty; i++)
+	{
+		long long arrCalculationValues[4] = { arrValues[0][i], arrValues[1][i], arrValues[2][i], arrValues[3][i] };
+
+		result = calculate(arrCalculationValues, nbQty, arrOperators[i]);
+		arrResults[i] = result;
+		total += result;
+	}
+	return total;
+}
+long long readFileAndCalcPartTwo(std::string inputFileName)
+{
+	std::ifstream inputFile(inputFileName.c_str());
+	std::string line = "";
+	std::string nb = "";
+	printf("Reading file line by line:\n");
+	auto start = std::chrono::high_resolution_clock::now();
+	int charValue = 0, lineIndex = 0;
+	static char arrInputChar[5][4000] = { { '0' },{'0'},{'0'},{'0'} };
+	bool firstSpaceFound = false;
+	long long total = 0;
+
+	while (std::getline(inputFile, line)) {
+		for (size_t i = 0; i <= line.length(); i++)
+		{
+			arrInputChar[lineIndex][i] = line[i];
+		}
+		lineIndex++;
+	}
+	inputFile.close();
+
+	//get operator line nb
+	int operatorLine = 0;
+	for (size_t i = 2; i < sizeof(arrInputChar)/sizeof(*arrInputChar); i++)
+	{
+		if (int(arrInputChar[i][0]) == 42 || int(arrInputChar[i][0]) == 43)
+		{
+			operatorLine = i;
+			break;
+		}
+	}
+
+	long long arrCalculationValues[10] = { 0 };
+	int charIndex = 0,nextOperatorIndex=0, indexCalculationValue=0;
+	char calcOperator = ' ', currentChar=' ';
+	bool lastOperation = false;
+	
+	std::string currentNb = "";
+	while (charIndex < 3800)
+	{
+		for (size_t i = charIndex+1; i <= charIndex+10; i++)
+		{
+			currentChar = arrInputChar[operatorLine][i];
+			if (int(currentChar) == 42 || int(currentChar) == 43)
+			{
+				nextOperatorIndex = i;
+				break;
+			}
+			else if(int(currentChar) == 0)
+			{
+				lastOperation=true;
+				nextOperatorIndex = i;
+				break;
+			}
+
+		}
+		if(!lastOperation)
+		lastOperation = nextOperatorIndex == charIndex + 10;
+
+		for (size_t i = 0; i < 10; i++)
+		{
+			arrCalculationValues[i] = 0;
+		}
+		
+		indexCalculationValue = 0;
+		for (int i = nextOperatorIndex-1; i >= charIndex; i--)
+		{
+			currentNb = "";
+			for (size_t j = 0; j < operatorLine; j++)
+			{
+				currentChar = arrInputChar[j][i];
+
+				if (int(currentChar)>47 && int(currentChar) < 58)
+				{
+					currentNb += currentChar;
+				}
+				
+			}
+			if (currentNb != "")
+			{
+				arrCalculationValues[indexCalculationValue] = std::stoll(currentNb);
+				indexCalculationValue++;
+			}
+
+			;
+		}
+		calcOperator = arrInputChar[operatorLine][charIndex];
+		total += calculate(arrCalculationValues, indexCalculationValue, calcOperator);
+		if (lastOperation)
+			break;
+		charIndex = nextOperatorIndex;
+
+	}
+
+
+
+	return total;
 }
 
 int main()
 {
-	auto timeFirstLine = std::chrono::high_resolution_clock::now();
 	std::string inputFileName = "input.txt";
 	//std::string inputFileName = "inputTest.txt";
 	int operatorQty = 0, nbQty = 0;
@@ -104,29 +219,14 @@ int main()
 	static long long arrValues[4][1000] = { 0 };
 	static char arrOperators[1000] = { 0 };
 	static long long arrResults[1000] = { 0 };
+	long long total = 0;
+	//total=readFileAndCalcPartOne(inputFileName);
 
-	printf("Reading file line by line:\n");
-	auto start = std::chrono::high_resolution_clock::now();
+	total = readFileAndCalcPartTwo(inputFileName);
 	
-	readFilePartOne(arrValues, arrOperators, inputFileName, &operatorQty, &nbQty);
-	
-	auto elapsed = std::chrono::high_resolution_clock::now() - start;
-	printf("File read in %lld microseconds.\n", std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count());
-	long long total = 0,result=0;
-	for (size_t i = 0; i < operatorQty; i++)
-	{
-		long long arrCalculationValues[4] = { arrValues[0][i], arrValues[1][i], arrValues[2][i], arrValues[3][i] };
-
-		result = calculate(arrCalculationValues,nbQty, arrOperators[i]);
-		arrResults [i] = result;
-		total += result;
-	}
-
-	auto totalelapsed = std::chrono::high_resolution_clock::now() - timeFirstLine;
 	std::string outputStr = "";
 	outputStr += "Good products: \n";
 	outputStr += "Total :"+std::to_string(total)+"\n";
-	outputStr += "Total time: " + std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(totalelapsed).count()) + " milliseconds.\n";
 	printf(outputStr.c_str());
 	std::ofstream outputFile("output.txt");
 	outputFile << outputStr;
