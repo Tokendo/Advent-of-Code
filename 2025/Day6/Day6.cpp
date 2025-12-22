@@ -26,23 +26,15 @@ long long calculate(long long arrInValues[100],int nbQty, char calcOperator)
 	
 	return result;
 }
-
-int main()
+void readFilePartOne(long long arrValues[4] [1000], char arrOperators[1000], std::string inputFileName,int* pOperatorQty, int* pNbQty)
 {
-	auto timeFirstLine = std::chrono::high_resolution_clock::now();
-	//std::ifstream inputFile("input.txt");
-	std::ifstream inputFile("inputTest.txt");
+	std::ifstream inputFile(inputFileName.c_str());
 	std::string line = "";
 	std::string nb = "";
-	static long long arrValues[4][1000] = { 0 };
-	static char arrOperators[1000] = { 0 };
-	static long long arrResults[1000] = { 0 };
-	int valuesCollumns = 0, valuesDepth = 0;
-
 	printf("Reading file line by line:\n");
 	auto start = std::chrono::high_resolution_clock::now();
-	int charvalue = 0, lineIndex = 0, indexChar = 0, operatorQty=0, nbQty=0;
-	bool firstSpaceFound = false, firstChar=true;
+	int charvalue = 0, lineIndex = 0, indexChar = 0;
+	bool firstSpaceFound = false;
 	while (std::getline(inputFile, line)) {
 		indexChar = -1;
 		do
@@ -53,10 +45,10 @@ int main()
 
 		if (charvalue > 47 && charvalue < 58)
 		{
-			nbQty++;
+			*pNbQty = *pNbQty+1;
 			int indexArr = 0;
 			// Process numeric line
-			
+
 			for (size_t i = 0; i <= line.length(); i++)
 			{
 				charvalue = int(line[i]);
@@ -82,14 +74,14 @@ int main()
 		{
 			int indexArr = 0;
 			// Process numeric line
-			for (size_t i = 0; i <= line.length()-1; i++)
+			for (size_t i = 0; i <= line.length() - 1; i++)
 			{
 				charvalue = int(line[i]);
-				if (charvalue != 32 )
+				if (charvalue != 32)
 				{
 					arrOperators[indexArr] = line[i];
 					indexArr++;
-					operatorQty++;
+					*pOperatorQty= *pOperatorQty+1;
 				}
 			}
 
@@ -99,6 +91,25 @@ int main()
 		lineIndex++;
 	}
 	inputFile.close();
+}
+
+int main()
+{
+	auto timeFirstLine = std::chrono::high_resolution_clock::now();
+	std::string inputFileName = "input.txt";
+	//std::string inputFileName = "inputTest.txt";
+	int operatorQty = 0, nbQty = 0;
+	
+
+	static long long arrValues[4][1000] = { 0 };
+	static char arrOperators[1000] = { 0 };
+	static long long arrResults[1000] = { 0 };
+
+	printf("Reading file line by line:\n");
+	auto start = std::chrono::high_resolution_clock::now();
+	
+	readFilePartOne(arrValues, arrOperators, inputFileName, &operatorQty, &nbQty);
+	
 	auto elapsed = std::chrono::high_resolution_clock::now() - start;
 	printf("File read in %lld microseconds.\n", std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count());
 	long long total = 0,result=0;
@@ -110,8 +121,6 @@ int main()
 		arrResults [i] = result;
 		total += result;
 	}
-
-
 
 	auto totalelapsed = std::chrono::high_resolution_clock::now() - timeFirstLine;
 	std::string outputStr = "";
