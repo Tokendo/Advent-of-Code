@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <chrono>
 
 struct  ElectricBox
 {
@@ -14,13 +15,13 @@ struct  ElectricBox
 };
 
 
-
 const int  inputHeight = 1100;
 static std::vector<std::string> vInputStr;
 static std::vector<ElectricBox> vElectricBox;
 static std::vector<int> vCircuitBoxCount;
 static  std::vector< std::vector<long long>> distances;
-int boxCount = 0, shortestDistBox1ID = 0, shortestDistBox2ID = 0, mergeCount=1;
+int boxCount = 0, shortestDistBox1ID = 0, shortestDistBox2ID = 0, mergeCount = 1, shortestIndex = 0;;
+long circuitCount = 0;
 
 void readFile(std::string inputFileName)
 {
@@ -72,6 +73,7 @@ void setupElectricBoxes()
 		vElectricBox[i].positionX = posX;
 		vElectricBox[i].positionY = posY;
 		vElectricBox[i].positionZ = posZ;
+		circuitCount++;
 	}
 }
 
@@ -129,6 +131,56 @@ void calculateAllDistances()
 	
 }
 
+void heapSort()
+{
+	auto startChrono = std::chrono::high_resolution_clock::now();
+	printf("Starting heap sort\n");
+	long start = distances.size() / 2 -1;
+	long end = distances.size() - 1;
+	long iteration = 0;
+	while (end > 1)
+	{
+		if (start > 0) //heap construction
+		{
+			start--;
+		}
+		else //heap extraction
+		{
+			end--;
+			std::swap(distances[0], distances[end]);
+		}
+		//sift down
+		long root = start;
+		while (root * 2 + 1 < end)
+		{
+			long child = root * 2 + 1;
+
+			if (child+1<end && distances[child][2]< distances[child+1][2])
+			{
+				child++;
+			}
+			if (distances[root][2] < distances[child][2])
+			{
+				std::swap(distances[root], distances[child]);
+				root = child;
+			}
+			else
+			{
+				break;
+			}
+		}
+		iteration++;
+		
+	}
+
+	auto elapsedChrono = std::chrono::high_resolution_clock::now() - startChrono;
+	printf("\nHeap sort finished\n");
+	printf("Elapsed time (ms): ");
+	printf(std::to_string(std::chrono::duration_cast<std::chrono::milliseconds>(elapsedChrono).count()).c_str());
+	printf("\n");
+	printf("\n");
+}
+
 bool checkAlreadyConnected(int box1ID, int box2ID)
 {
 	int length = vElectricBox[box1ID].vConnections.size();
@@ -167,37 +219,19 @@ void refreshShortestDistanceID()
 	}
 	//printf("refreshed!\n");
 }
+void refreshShortestDistanceIDSorted()
+{
+	shortestDistBox1ID = distances[shortestIndex][0];
+	shortestDistBox2ID = distances[shortestIndex][1];
+	shortestIndex++;
+}
 
 void mergeCircuits(int box1ID, int box2ID)
 {
 	int circuitIDToChange = vElectricBox[box2ID].circuitID;
 	int circuitIDToKeep = vElectricBox[box1ID].circuitID;
 	std::string outstr = "Cable:";
-	/*outstr += std::to_string(mergeCount);
-	outstr += " Distance:";
-	outstr += std::to_string(distances[mergeCount - 1][2]);
-	outstr += "\n Box1:";
-	outstr += std::to_string(box1ID);
-	outstr += " ";
-	outstr += std::to_string(vElectricBox[box1ID].positionX);
-	outstr += ",";
-	outstr += std::to_string(vElectricBox[box1ID].positionY);
-	outstr += ",";
-	outstr += std::to_string(vElectricBox[box1ID].positionZ);
-	outstr += " CircuitID:";
-	outstr += std::to_string(vElectricBox[box1ID].circuitID);
-	outstr += "\n Box2:";
-	outstr += std::to_string(box2ID);
-	outstr += " ";
-	outstr += std::to_string(vElectricBox[box2ID].positionX);
-	outstr += ",";
-	outstr += std::to_string(vElectricBox[box2ID].positionY);
-	outstr += ",";
-	outstr += std::to_string(vElectricBox[box2ID].positionZ);
-	outstr += " CircuitID:";
-	outstr += std::to_string(vElectricBox[box2ID].circuitID);
-	outstr += "\n";
-	printf(outstr.c_str());*/
+	
 	vElectricBox[box1ID].vConnections.push_back(box2ID);
 	mergeCount++;
 	if (vElectricBox[box1ID].circuitID == vElectricBox[box2ID].circuitID)
@@ -213,6 +247,20 @@ void mergeCircuits(int box1ID, int box2ID)
 	}
 	vCircuitBoxCount[circuitIDToKeep] += vCircuitBoxCount[circuitIDToChange];
 	vCircuitBoxCount[circuitIDToChange] = 0;
+	circuitCount--;
+	if (circuitCount == 1)
+	{
+		int debug = 1;
+		printf("All boxes connected! \n");
+		printf("Box1 coord X: ");
+		printf(std::to_string(vElectricBox[box1ID].positionX).c_str());
+		printf("\n Box2 coord X: ");
+		printf(std::to_string(vElectricBox[box2ID].positionX).c_str());
+		printf("\n Result= ");
+		printf(std::to_string(vElectricBox[box1ID].positionX*vElectricBox[box2ID].positionX).c_str());
+		printf("\n");
+
+	}
 	outstr = "Box par circuit:\n";
 	int length = vCircuitBoxCount.size();
 	for (size_t i = 0; i < length; i++)
@@ -231,7 +279,8 @@ void optimizeCircuits(int cableQty)
 {
 	for (size_t i = 0; i < cableQty; i++)
 	{
-		refreshShortestDistanceID();
+		refreshShortestDistanceIDSorted();
+		
 		mergeCircuits(shortestDistBox1ID, shortestDistBox2ID);
 	}
 }
@@ -279,13 +328,15 @@ std::string getGreatestCircuits()
 int main()
 {
 	//std::string inputFileName = "inputTest.txt";
+	//std::string inputFileName = "inputSmall.txt";
 	std::string inputFileName = "input.txt";
 	std::string outputStr = "";
 
 	readFile(inputFileName);
 	setupElectricBoxes();
 	calculateAllDistances();
-	optimizeCircuits(1000);
+	heapSort();
+	optimizeCircuits(100000);
 
 	outputStr = getGreatestCircuits();
 	printf(outputStr.c_str());

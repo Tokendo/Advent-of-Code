@@ -1,4 +1,4 @@
-Big 1 ID: 333 Count: 51
-Big 2 ID: 559 Count: 39
-Big 3 ID: 401 Count: 38
-Result: 75582
+Big 1 ID: 396 Count: 1000
+Big 2 ID: 999 Count: 0
+Big 3 ID: 998 Count: 0
+Result: 0
