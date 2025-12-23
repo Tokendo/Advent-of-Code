@@ -1,0 +1,17 @@
+﻿  Day9.cpp
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(43,38): warning C4244: '=' : conversion de '__int64' en '_Ty', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(43,38): warning C4244:         with
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(43,38): warning C4244:         [
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(43,38): warning C4244:             _Ty=long
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(43,38): warning C4244:         ]
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(47,36): warning C4244: '=' : conversion de '__int64' en '_Ty', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(47,36): warning C4244:         with
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(47,36): warning C4244:         [
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(47,36): warning C4244:             _Ty=long
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(47,36): warning C4244:         ]
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(101,13): warning C4267: 'initialisation' : conversion de 'size_t' en 'long', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(102,11): warning C4267: 'initialisation' : conversion de 'size_t' en 'long', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(195,16): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(195,12): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(197,18): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
+  Day9.vcxproj -> C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\x64\Debug\Day9.exe
