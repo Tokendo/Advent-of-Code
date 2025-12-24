@@ -1,17 +1,17 @@
 ﻿  Day9.cpp
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(43,38): warning C4244: '=' : conversion de '__int64' en '_Ty', perte possible de données
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(43,38): warning C4244:         with
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(43,38): warning C4244:         [
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(43,38): warning C4244:             _Ty=long
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(43,38): warning C4244:         ]
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(47,36): warning C4244: '=' : conversion de '__int64' en '_Ty', perte possible de données
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(47,36): warning C4244:         with
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(47,36): warning C4244:         [
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(47,36): warning C4244:             _Ty=long
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(47,36): warning C4244:         ]
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(101,13): warning C4267: 'initialisation' : conversion de 'size_t' en 'long', perte possible de données
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(102,11): warning C4267: 'initialisation' : conversion de 'size_t' en 'long', perte possible de données
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(195,16): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(195,12): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
-C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(197,18): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(78,17): warning C4244: 'initialisation' : conversion de '__int64' en 'long', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(91,15): warning C4244: 'initialisation' : conversion de '__int64' en 'long', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(159,10): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(198,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(223,22): warning C4018: '>' : incompatibilité signed/unsigned
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(251,22): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(275,22): warning C4018: '>' : incompatibilité signed/unsigned
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(391,17): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(23,13): warning C4267: 'initialisation' : conversion de 'size_t' en 'long', perte possible de données
+      C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(23,13):
+      le contexte d’instanciation du modèle (le plus ancien) est
+          C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(146,2):
+          voir la référence à l'instanciation de la fonction modèle 'void heapSortVector<std::vector<__int64,std::allocator<__int64>>>(std::vector<std::vector<__int64,std::allocator<__int64>>,std::allocator<std::vector<__int64,std::allocator<__int64>>>> &,int)' en cours de compilation
+  
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\Day9.cpp(24,11): warning C4267: 'initialisation' : conversion de 'size_t' en 'long', perte possible de données
   Day9.vcxproj -> C:\Users\Marla\Documents\Advent-of-Code\2025\Day9\x64\Debug\Day9.exe
