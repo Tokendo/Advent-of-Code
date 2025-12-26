@@ -4,19 +4,15 @@
 #include <sstream>
 #include <vector>
 #include <chrono>
-#include <thread>
-#include <future>
+#include <cmath>
 
 
-const int  inputHeight = 1100, inputWidth = 1000;
 static std::vector< std::vector<bool>> vInputLight;
 static  std::vector< std::vector<std::vector<bool>>> vInputWires;
-static  std::vector< std::vector<long long>> surfaces;
-static  std::vector< std::vector<long long>> vWall;
-static  std::vector< std::vector<long long>> hWall;
-int lineCount = 0;
-long minY = LONG_MAX, maxY = LONG_MIN, minX = LONG_MAX, maxX = LONG_MIN;
+static std::vector< std::vector<int>> vInputJoltage;
 
+
+int lineCount = 0;
 
 template<typename T>
 void heapSortVector(std::vector<T>& v, int index)
@@ -64,16 +60,17 @@ void readFile(std::string inputFileName)
 {
 	std::ifstream inputFile(inputFileName.c_str());
 	std::string line = "";
-	bool isWire = false, isLight = true;
-	int indexWire = 0;
+	bool isWire = false, isLight = true, isJoltage=false;
+	int indexWire = 0,indexJoltage=0;
 	std::string nb = "";
 
 	while (std::getline(inputFile, line)) {
 		std::string nb = "";
 		vInputLight.push_back(std::vector<bool>(12, 0));
+		vInputJoltage.push_back(std::vector<int>(12,0));
 		vInputWires.push_back(std::vector<std::vector<bool>>(1, std::vector<bool>(12, 0)));
 		isLight = true;
-		indexWire = 0;
+		indexWire = 0, indexJoltage=0;
 		for (size_t i = 1; i < line.length(); i++)
 		{
 			char c = line[i];
@@ -118,9 +115,32 @@ void readFile(std::string inputFileName)
 			else if (c == '{')
 			{
 				isWire = false;
-				
+				isJoltage = true;
+			}
+			else if (isJoltage && int(c) > 47 && int(c) < 58)
+			{
+				nb += c;
+				//complete
+			}
+			else if (isJoltage && c == ',')
+			{
+				vInputJoltage.back()[indexJoltage] = stoll(nb);
+				indexJoltage++;
+				nb = "";
+			}
+			else if (c == '}')
+			{
+				if (nb != "")
+				{
+					vInputJoltage.back()[indexJoltage] = stoll(nb);
+					nb = "";
+				}
+				isJoltage = false;
 				break;
 			}
+
+			
+
 		}
 		//printf("ligne");
 		;
@@ -128,14 +148,12 @@ void readFile(std::string inputFileName)
 	inputFile.close();
 }
 
-long long iterativCalculation(int index)
+long long iterativeCalculation(int index)
 {
 	int circuitsCount = vInputWires[index].size();
-	long long iterationCount = 1;
 	int nbLength = vInputLight[index].size();
 	int component[20] = {-1};
 	std::vector < std::vector<bool>> operations;
-	bool start[12] = { false };
 	bool result[12] = { false };
 	bool target[12] = { false };
 	
@@ -153,7 +171,6 @@ long long iterativCalculation(int index)
 
 	for (size_t x = 0; x < 10000000; x++)
 	{
-		//
 		operations.clear();
 		
 		for (size_t y = 0; y < circuitsCount; y++)
@@ -194,10 +211,10 @@ long long iterativCalculation(int index)
 			result[11] == target[11] 
 			)
 		{
-			iterationCount = operations.size();
+			
 			printf(" iterations: ");
 			printf(std::to_string(x).c_str());
-			return iterationCount;
+			return operations.size();
 		}
 		component[0]++;
 		for (size_t i = 0; i < 19; i++)
@@ -224,7 +241,7 @@ long long getTotalIteration()
 	{
 		printf("ligne: ");
 		printf(std::to_string(i + 1).c_str());
-		iterations = iterativCalculation(i);
+		iterations = iterativeCalculation(i);
 		result += iterations;
 		
 		printf(" Buttons pressed: ");
@@ -233,10 +250,27 @@ long long getTotalIteration()
 	}
 	return result;
 }
+long computeJoltage(int index)
+{
+
+}
+
+long  getTotalButtonsForJoltage()
+
+{
+	size_t length = vInputLight.size();
+	long totalBtnPressed = 0;
+	for (size_t i = 0; i < length; i++)
+	{
+		totalBtnPressed+=computeJoltage(i);
+	}
+
+	return totalBtnPressed;
+}
 
 int main()
 {
-	long long result = 0;
+	long  result1 = 0, result2 = 0;
 
 	//std::string inputFileName = "inputTest.txt";
 	std::string inputFileName = "input.txt";
@@ -244,13 +278,19 @@ int main()
 
 	readFile(inputFileName);
 
-	//brutForceResult
+	//brutForceResult part 1
 
-	result = getTotalIteration();
+	//result1 = getTotalIteration();
+	result2 = getTotalButtonsForJoltage();
 
 
-	outputStr = "Result is:";
-	outputStr += std::to_string(result).c_str();
+
+	outputStr = "Result1 is:";
+	outputStr += std::to_string(result1).c_str();
+	outputStr = "\n Result2 is:";
+	outputStr += std::to_string(result2).c_str();
+
+
 	printf(outputStr.c_str());
 
 	std::ofstream outputFile("output.txt");
