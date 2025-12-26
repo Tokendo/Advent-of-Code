@@ -1,4 +1,7 @@
 ﻿  Day10.cpp
 C:\Users\Marla\Documents\Advent-of-Code\2025\Day10\Day10.cpp(103,16): warning C4244: '=' : conversion de '__int64' en 'int', perte possible de données
 C:\Users\Marla\Documents\Advent-of-Code\2025\Day10\Day10.cpp(112,17): warning C4244: '=' : conversion de '__int64' en 'int', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day10\Day10.cpp(133,20): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day10\Day10.cpp(135,15): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\Marla\Documents\Advent-of-Code\2025\Day10\Day10.cpp(227,36): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
   Day10.vcxproj -> C:\Users\Marla\Documents\Advent-of-Code\2025\Day10\x64\Debug\Day10.exe
